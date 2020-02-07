@@ -1,5 +1,4 @@
 .App {
-    text-align: center;
 }
 
 .App-logo {
@@ -19,4 +18,15 @@
 
 .App-link {
     color: #09d3ac;
+}
+
+.App img{
+    width: 200px;
+}
+
+.App .box{
+    background: url("./assets/reactJPEG.jpeg") no-repeat center;
+    background-size: cover;
+    width: 100px;
+    height: 100px;
 }
