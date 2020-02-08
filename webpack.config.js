@@ -1,10 +1,13 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+const {
+    CleanWebpackPlugin
+} = require('clean-webpack-plugin');
 const path = require('path');
 
 module.exports = {
     entry: './src/index.js',
     output: {
-        filename: 'main.js',
+        filename: 'main.[hash].js',
         path: path.resolve(__dirname, 'dist'),
     },
     devServer: {
@@ -28,11 +31,12 @@ module.exports = {
             use: [
                 'file-loader',
             ],
-        }
-    ]
+        }]
     },
     plugins: [new HtmlWebpackPlugin({
-        title: 'react-wb-init',
-        template: './public/index.html'
-    })]
+            title: 'react-wb-init',
+            template: './public/index.html'
+        }),
+        new CleanWebpackPlugin(),
+    ]
 };
