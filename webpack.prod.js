@@ -27,7 +27,21 @@ module.exports = {
             }
         }, {
             test: /\.css$/,
-            use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader']
+            use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', {
+                loader: 'postcss-loader',
+                options: {
+                    plugins: () => [
+                        require('autoprefixer')({
+                            overrideBrowserslist: ["Android 4.1",
+                                "iOS 7.1",
+                                "Chrome > 31",
+                                "ff > 31",
+                                "ie >= 8"
+                            ]
+                        })
+                    ]
+                }
+            }]
         }, {
             test: /\.(png|svg|jpg|gif|jpeg)$/,
             use: [
@@ -54,7 +68,7 @@ module.exports = {
         }),
         new OptimizeCssAssetsPlugin({
             assetNameRegExp: /\.css$/g,
-            cssProcessor:require('cssnano')
+            cssProcessor: require('cssnano')
         })
     ]
 };
