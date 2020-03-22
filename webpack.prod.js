@@ -1,5 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
 const {
     CleanWebpackPlugin
 } = require('clean-webpack-plugin');
@@ -25,7 +27,7 @@ module.exports = {
             }
         }, {
             test: /\.css$/,
-            use: ['style-loader',MiniCssExtractPlugin.loader, 'css-loader']
+            use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader']
         }, {
             test: /\.(png|svg|jpg|gif|jpeg)$/,
             use: [
@@ -35,11 +37,24 @@ module.exports = {
     },
     plugins: [new HtmlWebpackPlugin({
             title: 'react-wb-init',
-            template: './public/index.html'
+            template: './public/index.html',
+            inject: true,
+            minify: {
+                html5: true,
+                collapseWhitespace: true,
+                preserveLineBreaks: false,
+                minifyCSS: true,
+                minifyJS: true,
+                removeComments: true
+            }
         }),
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
-            filename:`[name][contenthash:8].css`
+            filename: `[name][contenthash:8].css`
+        }),
+        new OptimizeCssAssetsPlugin({
+            assetNameRegExp: /\.css$/g,
+            cssProcessor:require('cssnano')
         })
     ]
 };
