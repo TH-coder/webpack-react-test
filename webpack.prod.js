@@ -2,15 +2,59 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
+const glob = require('glob');
 
 const {
     CleanWebpackPlugin
 } = require('clean-webpack-plugin');
 const path = require('path');
 
+const setMPA = () => {
+    const entry = {};
+    const htmlWebpackPlugins = [];
+
+    const entryFiles = glob.sync(path.join(__dirname, './src/*/index.js'));
+
+    entryFiles.forEach(item => {
+        const entryFile = item;
+        const match = entryFile.match(/src\/(.*)\/index\.js/);
+        const pageName = match && match[1];
+
+        entry[pageName] = entryFile;
+
+        htmlWebpackPlugins.push(
+            new HtmlWebpackPlugin({
+                title: 'react-wb-init',
+                template: './public/index.html',
+                chunks: [pageName],
+                filename: `${pageName}.html`,
+                inject: true,
+                minify: {
+                    html5: true,
+                    collapseWhitespace: true,
+                    preserveLineBreaks: false,
+                    minifyCSS: true,
+                    minifyJS: true,
+                    removeComments: true
+                }
+            }))
+    })
+
+    return {
+        entry,
+        htmlWebpackPlugins
+    }
+}
+
+const {
+    entry,
+    htmlWebpackPlugins
+} = setMPA();
+
+
 
 module.exports = {
-    entry: './src/index.js',
+    entry,
     mode: 'production',
     output: {
         filename: '[name].[hash].js',
@@ -50,19 +94,7 @@ module.exports = {
             ],
         }]
     },
-    plugins: [new HtmlWebpackPlugin({
-            title: 'react-wb-init',
-            template: './public/index.html',
-            inject: true,
-            minify: {
-                html5: true,
-                collapseWhitespace: true,
-                preserveLineBreaks: false,
-                minifyCSS: true,
-                minifyJS: true,
-                removeComments: true
-            }
-        }),
+    plugins: [
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: `[name][contenthash:8].css`
@@ -82,7 +114,7 @@ module.exports = {
         //         global: 'ReactDOM'
         //     }]
         // }),
-    ],
+    ].concat(htmlWebpackPlugins),
     optimization: {
         // splitChunks: {
         //     cacheGroups:{

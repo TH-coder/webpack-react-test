@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import p1 from './assets/reactGIF.gif';
-import p2 from './assets/reactJPEG.jpeg';
+import p1 from '../assets/reactGIF.gif';
+import p2 from '../assets/reactJPEG.jpeg';
 
 class App extends React.Component {
     constructor(props){
@@ -12,7 +12,7 @@ class App extends React.Component {
         this.loadComponent = this.loadComponent.bind(this);
     }
     loadComponent(){
-        import('./component/text/Text').then(text=>{
+        import('./text/Text').then(text=>{
             this.setState({
                 text:text.default
             })
