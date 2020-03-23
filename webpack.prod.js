@@ -13,7 +13,7 @@ module.exports = {
     entry: './src/index.js',
     mode: 'production',
     output: {
-        filename: 'main.[hash].js',
+        filename: '[name].[hash].js',
         path: path.resolve(__dirname, 'dist'),
     },
     module: {
@@ -71,16 +71,27 @@ module.exports = {
             assetNameRegExp: /\.css$/g,
             cssProcessor: require('cssnano')
         }),
-        new HtmlWebpackExternalsPlugin({
-            externals: [{
-                module: 'react',
-                entry:'https://lib.baomitu.com/react/16.11.0/umd/react.development.js',
-                global:'React'
-            },{
-                module: 'react-dom',
-                entry:'https://lib.baomitu.com/react-dom/16.11.0/umd/react-dom.development.js',
-                global:'ReactDOM'
-            }]
-        })
-    ]
+        // new HtmlWebpackExternalsPlugin({
+        //     externals: [{
+        //         module: 'react',
+        //         entry: 'https://lib.baomitu.com/react/16.11.0/umd/react.development.js',
+        //         global: 'React'
+        //     }, {
+        //         module: 'react-dom',
+        //         entry: 'https://lib.baomitu.com/react-dom/16.11.0/umd/react-dom.development.js',
+        //         global: 'ReactDOM'
+        //     }]
+        // }),
+    ],
+    optimization: {
+        splitChunks: {
+            cacheGroups:{
+                commons:{
+                    test:/(react|react-dom)/,
+                    name:'vender',
+                    chunks: 'all'
+                }
+            }
+        }
+    },
 };
