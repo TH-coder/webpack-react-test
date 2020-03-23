@@ -84,14 +84,14 @@ module.exports = {
         // }),
     ],
     optimization: {
-        splitChunks: {
-            cacheGroups:{
-                commons:{
-                    test:/(react|react-dom)/,
-                    name:'vender',
-                    chunks: 'all'
-                }
-            }
-        }
+        // splitChunks: {
+        //     cacheGroups:{
+        //         commons:{
+        //             test:/(react|react-dom)/,
+        //             name:'vender',
+        //             chunks: 'all'
+        //         }
+        //     }
+        // }
     },
 };
