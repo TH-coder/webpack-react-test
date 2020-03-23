@@ -24,7 +24,7 @@ module.exports = {
             }
         }, {
             test: /\.css$/,
-            use: ['style-loader',MiniCssExtractPlugin.loader, 'css-loader']
+            use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader']
         }, {
             test: /\.(png|svg|jpg|gif|jpeg)$/,
             use: [
@@ -37,7 +37,8 @@ module.exports = {
             template: './public/index.html'
         }),
         new MiniCssExtractPlugin({
-            filename:`[name][contenthash:8].css`
+            filename: `[name][contenthash:8].css`
         })
-    ]
+    ],
+    devtool: 'inline-source-map'
 };

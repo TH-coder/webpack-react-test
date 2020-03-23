@@ -19,6 +19,9 @@
     -->
   <title>React App</title>
   ${ require('raw-loader!./meta.html')}
+  <script>
+    // var process = {env: {NODE_ENV: 'production'}}
+  </script>
   <script>${ require('raw-loader!babel-loader!../node_modules/lib-flexible/flexible.js') }</script>
 </head>
 

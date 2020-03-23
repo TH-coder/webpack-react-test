@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
 
 const {
     CleanWebpackPlugin
@@ -69,6 +70,17 @@ module.exports = {
         new OptimizeCssAssetsPlugin({
             assetNameRegExp: /\.css$/g,
             cssProcessor: require('cssnano')
+        }),
+        new HtmlWebpackExternalsPlugin({
+            externals: [{
+                module: 'react',
+                entry:'https://lib.baomitu.com/react/16.11.0/umd/react.development.js',
+                global:'React'
+            },{
+                module: 'react-dom',
+                entry:'https://lib.baomitu.com/react-dom/16.11.0/umd/react-dom.development.js',
+                global:'ReactDOM'
+            }]
         })
     ]
 };
