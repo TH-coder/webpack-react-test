@@ -1,9 +1,10 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const friendlyPlugin = require('Friendly-errors-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-    entry: './src/index.js',
+    entry: './src/Index/index.js',
     mode: 'development',
     output: {
         filename: 'main.[hash].js',
@@ -11,6 +12,7 @@ module.exports = {
     },
     devServer: {
         contentBase: './dist',
+        stats: 'errors-only'
     },
     module: {
         rules: [{
@@ -38,7 +40,8 @@ module.exports = {
         }),
         new MiniCssExtractPlugin({
             filename: `[name][contenthash:8].css`
-        })
+        }),
+        new friendlyPlugin()
     ],
     devtool: 'inline-source-map'
 };

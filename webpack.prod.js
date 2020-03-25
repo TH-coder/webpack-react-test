@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
+const friendlyPlugin = require('Friendly-errors-webpack-plugin');
 const glob = require('glob');
 
 const {
@@ -55,7 +56,7 @@ const {
 
 module.exports = {
     entry,
-    mode: 'production',
+    mode: 'none',
     output: {
         filename: '[name].[hash].js',
         path: path.resolve(__dirname, 'dist'),
@@ -114,6 +115,7 @@ module.exports = {
         //         global: 'ReactDOM'
         //     }]
         // }),
+        new friendlyPlugin()
     ].concat(htmlWebpackPlugins),
     optimization: {
         // splitChunks: {
@@ -126,4 +128,6 @@ module.exports = {
         //     }
         // }
     },
+    // 日志信息只有错误的时候才会输出
+    stats:'errors-only'
 };
